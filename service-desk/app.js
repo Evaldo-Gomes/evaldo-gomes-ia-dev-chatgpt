@@ -63,20 +63,29 @@ tabs.forEach((tab) => {
 ticketForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
+  const requester = document.querySelector("#requester").value.trim();
+  const title = document.querySelector("#title").value.trim();
+  const description = document.querySelector("#description").value.trim();
+
+  if (!requester || !title || !description) {
+    showToast("Solicitante, título e descrição não podem conter apenas espaços.");
+    return;
+  }
+
   const formTicket = {
     id: nextId(),
-    requester: document.querySelector("#requester").value.trim(),
+    requester,
     email: document.querySelector("#email").value.trim(),
     category: document.querySelector("#category").value,
     priority: document.querySelector("#priority").value,
     status: "Aberto",
-    title: document.querySelector("#title").value.trim(),
-    description: document.querySelector("#description").value.trim(),
+    title,
+    description,
     correction: "",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     events: [
-      `Chamado aberto por ${document.querySelector("#requester").value.trim()}.`
+      `Chamado aberto por ${requester}.`
     ]
   };
 
